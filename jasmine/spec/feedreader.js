@@ -32,7 +32,7 @@ $(function() {
         it('All items have url', function() {
             for(var i = 0; i < allFeeds.length; i++) {
                 expect(allFeeds[i].url).toBeDefined();
-                expect(allFeeds[i].url).not.toBe("");
+                expect(allFeeds[i].url).not.toBe('');
             }
         });
 
@@ -42,7 +42,7 @@ $(function() {
         it('All items have name', function() {
             for(var i = 0; i < allFeeds.length; i++) {
                 expect(allFeeds[i].name).toBeDefined();
-                expect(allFeeds[i].name).not.toBe("");
+                expect(allFeeds[i].name).not.toBe('');
             }
         });
     });
@@ -51,15 +51,12 @@ $(function() {
     /* The menu test suite */
     describe('The Menu', function() {
         // We'll re-use these variables throughout this suite
-        var hideClass,  // CSS class name that places menu off-screen by default
-            menuButton, // Menu toggle button DOM element
-            docBody;    // DOM body element
-
-        beforeEach(function() {
-            menuButton = document.getElementsByClassName("menu-icon-link")[0];
-            docBody = document.getElementsByTagName('body')[0];
-            hideClass = 'menu-hidden';
-        });
+        // CSS class name that places menu off-screen by default
+        var menuButton = document.getElementsByClassName("menu-icon-link")[0];
+        // Menu toggle button DOM element
+        var docBody = document.getElementsByTagName('body')[0];
+        // DOM body element
+        var hideClass = 'menu-hidden';
         
         /* Ensure that the menu element is hidden by default */
         it('Menu hidden by default', function() {
@@ -92,45 +89,71 @@ $(function() {
     /* Initial Entries test suite */    
     describe('Initial Entries', function() {
         beforeEach(function(done) {
-            loadFeed(0, function() {
-                done(); // for asynchronicity
-            });
+            loadFeed(0, done); // for asynchronicity
         });
         
         /* Ensure that the '.feed' container element contains at
          * least one '.entry' element
          */
-        it("Should exist at least 1 '.entry' element in '.feed' container", function(done) {
+        it("Should exist at least 1 '.entry' element in '.feed' container", function() {
             // Get the 'feed' element in our DOM
             var feedCont = document.getElementsByClassName("feed")[0];
             // Get the 'entries' elements within feed DOM element
             var entries = feedCont.getElementsByClassName("entry");
             // Check length of entries array
             expect(entries.length).toBeGreaterThan(0);
-            done();  // for asynchronicity
         });
     });
     
 
     /* New Feed Selection test suite */    
     describe('New Feed Selection', function() {
-        // Get state of the 'feed' DOM element before loading content
-        var prevFeedCont = document.getElementsByClassName("feed")[0].innerHTML;
+        var prevFeedCont, feedCont;
         
         beforeEach(function(done) {
             loadFeed(0, function() {
-                done(); // for asynchronicity
+                // Get the 'feed' element in our DOM after first loadFeed call
+                prevFeedCont = document.getElementsByClassName("feed")[0].innerHTML;
+                loadFeed(1, function() {
+                    // Get the 'feed' element in our DOM after second loadFeed call
+                    feedCont = document.getElementsByClassName("feed")[0].innerHTML;
+                    done(); // for asynchronicity
+                });
             });
         });
-        
-        /* Ensure that when a new feed is loaded by loadFeed function,
-         * the content actually changes.
-         */
-        it("Feed content changes", function(done) {
-            // Get the 'feed' element in our DOM
-            var feedCont = document.getElementsByClassName("feed")[0].innerHTML;
+
+        it("Feed DOM content changes upon selecting different feed", function(done) {
+            // Are both feed contents strings?
+            expect(feedCont).toEqual(jasmine.any(String));
+            expect(prevFeedCont).toEqual(jasmine.any(String));
+            
+            // Are they non-empty strings?
+            expect(feedCont).not.toBe('');
+            expect(prevFeedCont).not.toBe('');
+            
+            // Are they non-equal?
             expect(feedCont).not.toEqual(prevFeedCont);
             done();  // for asynchronicity
         });
     });
+
+    /* The Article Overload test suite */
+    describe('Article Overload', function() {
+        /* Ensure that user has read more than 1,000,000,000 articles
+         */
+        xit('Reached end of internet', function() {
+            var userName = user.name;
+            var totalArticlesRead = user.markedRead.length;
+            var rightNow = new Date();
+            var elapsed = rightNow - user.lastSession;
+            var oneDay = 8.64e7;    // Milliseconds in one day
+                
+            // First make sure the user is logged in
+            expect(userName).not.toBe(null);
+            // Then make sure user's last session was less than 24 hours ago
+            expect(elapsed).not.toBeGreaterThan(oneDay);            
+            // Finally make sure they have read at least a billion articles
+            expect(totalArticlesRead).not.toBeLessThan(1e9);
+        });
+    });    
 }());

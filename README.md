@@ -1,39 +1,23 @@
 # Project Overview
 
-In this project you are given a web-based application that reads RSS feeds. The original developer of this application clearly saw the value in testing, they've already included [Jasmine](http://jasmine.github.io/) and even started writing their first test suite! Unfortunately, they decided to move on to start their own company and we're now left with an application with an incomplete test suite. That's where you come in.
+## Feed Reader Testing
+This project applies test-driven-development methods to an RSS reader web application. More specifically, we're using [Jasmine](http://jasmine.github.io/) to write test suites that check:
+1. Variable definitions, non-zero arrays and string lengths
+2. DOM UI default state and click responses
+3. Content change after asynchronous load
+4. Articles read by the user
 
+#### To Run the Application Locally
+Mac Localhost: Download the project from its [Github repo](https://github.com/computershawn/frontend-nanodegree-feedreader.git) to your 'Sites' folder. In your desktop browser, navigate to the web app: http://localhost/~{your short user name}/frontend-nanodegree-feedreader
 
-## Why this Project?
+Alternatively, after downloading the app, you could open index.html with Adobe's Brackets text editor (free!). Then, while in Brackets, click File > Live Preview to view the application in your default browser.
 
-Testing is an important part of the development process and many organizations practice a standard of development known as "test-driven development". This is when developers write tests first, before they ever start developing their application. All the tests initially fail and then they start writing application code to make these tests pass.
+#### Viewing Status of Your Test Suite
+The page will download some content asynchronously, so it may take a few seconds for content to load. Take a moment to view the list of articles, and then scroll to the bottom. You should see the Jasmine console, with a list of test specs. The suite for this application contains five test suites:
+* RSS Feeds – Verifies that an array of feeds exists, and that each element has a name and URL
+* The Menu – Makes sure that the menu is hidden upon first loading the page. It also checks for a change in the menu's visibility upon user click.
+* Initial Entries – Makes sure there is at least one element with class name 'entry' in the 'feed' DOM container
+* New Feed Selection – Verifies that the feed reader's DOM content changes whenever a different RSS feed is loaded
+* Article Overload – This suite is for Leader Boards, a future feature of our feed reader. Users will be eligible for prizes, but more importantly, 1337 status, for consuming massive volumes of RSS data. This suite is labeled as 'pending', because the functionality it's checking against has not yet been written into the main app. 
 
-Whether you work in an organization that uses test-driven development or in an organization that uses tests to make sure future feature development doesn't break existing features, it's an important skill to have!
-
-
-## What will I learn?
-
-You will learn how to use Jasmine to write a number of tests against a pre-existing application. These will test the underlying business logic of the application as well as the event handling and DOM manipulation.
-
-
-## How will this help my career?
-
-* Writing effective tests requires analyzing multiple aspects of an application including the HTML, CSS and JavaScript - an extremely important skill when changing teams or joining a new company.
-* Good tests give you the ability to quickly analyze whether new code breaks an existing feature within your codebase, without having to manually test all of the functionality.
-
-
-# How will I complete this project?
-
-1. Download the [required project assets](http://github.com/udacity/frontend-nanodegree-feedreader).
-2. Review the functionality of the application within your browser.
-3. Explore the application's HTML (*./index.html*), CSS (*./css/style.css*) and JavaScript (*./js/app.js*) to gain an understanding of how it works.
-4. Explore the Jasmine spec file in *./jasmine/spec/feedreader.js*
-5. Edit the allFeeds variable in *./js/app.js* to make the provided test fail and see how Jasmine visualizes this failure in your application.
-6. Return the allFeeds variable to a passing state.
-7. Write a test that loops through each feed in the allFeeds object and ensures it has a URL defined and that the URL is not empty.
-8. Write a test that loops through each feed in the allFeeds object and ensures it has a name defined and that the name is not empty.
-9. Write a new test suite named "The menu".
-10. Write a test that ensures the menu element is hidden by default. You'll have to analyze the HTML and the CSS to determine how we're performing the hiding/showing of the menu element.
-11. Write a test that ensures the menu changes visibility when the menu icon is clicked. This test should have two expectations: does the menu display when clicked and does it hide when clicked again.
-12. Write a test that ensures when the loadFeed function is called and completes its work, there is at least a single .entry element within the .feed container. Remember, loadFeed() is asynchronous so this test wil require the use of Jasmine's beforeEach and asynchronous done() function.
-13. Write a test that ensures when a new feed is loaded by the loadFeed function that the content actually changes. Remember, loadFeed() is asynchronous.
-14. When complete - all of your tests should pass.
+The top bar of the Jasmine console shows the test suite's status: Total number of specs, number of failures and number of pending specs. The background color of the top bar will be red if any of the specs has failed. Beneath each of these suite descriptions is a list of individual tests that are run each time the application loads. If the spec has passed or is pending, just its title will be listed. If the spec has failed, the cause of the failure will be listed under the spec's title. This description should provide some insight into how to resolve the test failure.
