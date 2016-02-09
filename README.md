@@ -1,5 +1,3 @@
-# Project Overview
-
 ## Feed Reader Testing
 This project applies test-driven-development methods to an RSS reader web application. More specifically, we're using [Jasmine](http://jasmine.github.io/) to write test suites that check:
 
